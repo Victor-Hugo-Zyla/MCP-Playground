@@ -26,6 +26,23 @@ SOUTH_AMERICAN_CAPITALS = {
     "Venezuela": "Caracas"
 }
 
+# US States and their capitals
+US_STATE_CAPITALS = {
+    "AL": "Montgomery", "AK": "Juneau", "AZ": "Phoenix", "AR": "Little Rock",
+    "CA": "Sacramento", "CO": "Denver", "CT": "Hartford", "DE": "Dover",
+    "FL": "Tallahassee", "GA": "Atlanta", "HI": "Honolulu", "ID": "Boise",
+    "IL": "Springfield", "IN": "Indianapolis", "IA": "Des Moines", "KS": "Topeka",
+    "KY": "Frankfort", "LA": "Baton Rouge", "ME": "Augusta", "MD": "Annapolis",
+    "MA": "Boston", "MI": "Lansing", "MN": "Saint Paul", "MS": "Jackson",
+    "MO": "Jefferson City", "MT": "Helena", "NE": "Lincoln", "NV": "Carson City",
+    "NH": "Concord", "NJ": "Trenton", "NM": "Santa Fe", "NY": "Albany",
+    "NC": "Raleigh", "ND": "Bismarck", "OH": "Columbus", "OK": "Oklahoma City",
+    "OR": "Salem", "PA": "Harrisburg", "RI": "Providence", "SC": "Columbia",
+    "SD": "Pierre", "TN": "Nashville", "TX": "Austin", "UT": "Salt Lake City",
+    "VT": "Montpelier", "VA": "Richmond", "WA": "Olympia", "WV": "Charleston",
+    "WI": "Madison", "WY": "Cheyenne"
+}
+
 async def make_nws_request(url: str) -> dict[str, Any] | None:
     """Make a request to the NWS API with proper error handling."""
     headers = {
@@ -118,6 +135,19 @@ def get_south_american_capital(country: str) -> str:
         return f"País não encontrado. Países disponíveis: {', '.join(sorted(SOUTH_AMERICAN_CAPITALS.keys()))}"
     
     return f"A capital de {country} é {SOUTH_AMERICAN_CAPITALS[country]}"
+
+@mcp.tool()
+def get_us_state_capital(state: str) -> str:
+    """Get the capital of a US state.
+
+    Args:
+        state: Two-letter US state code (e.g. CA, NY)
+    """
+    state = state.strip().upper()
+    if state not in US_STATE_CAPITALS:
+        return f"Estado não encontrado. Estados disponíveis: {', '.join(sorted(US_STATE_CAPITALS.keys()))}"
+    
+    return f"A capital de {state} é {US_STATE_CAPITALS[state]}"
 
 if __name__ == "__main__":
     # Initialize and run the server
